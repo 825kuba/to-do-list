@@ -20,13 +20,21 @@
           <button class="btn new-item-btn">➕</button>
         </form>
       </section>
-      <section class="list-control">
+      <section class="list-control hidden">
         <p class="list-length"></p>
         <div class="filter-items">
+          <span>Show</span>
           <select name="show-type" id="show-type" class="filter-items-menu">
             <option value="all">All</option>
             <option value="completed">Completed</option>
             <option value="not-completed">Not completed</option>
+          </select>
+        </div>
+        <div class="delete-items">
+          <button class="btn delete-items-btn">❌</button>
+          <select name="show-type" id="show-type" class="delete-items-menu">
+            <option value="all">All</option>
+            <option value="completed">completed</option>
           </select>
         </div>
       </section>

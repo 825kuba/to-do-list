@@ -10,12 +10,19 @@ class ListItem {
   }
 }
 
+//NEW ITEM ELEMENTS
 const newItemText = document.querySelector('.new-item-text');
 const newItemBtn = document.querySelector('.new-item-btn');
 
+// LIST CONTROL ELEMENTS
+const listControl = document.querySelector('.list-control');
 const listLength = document.querySelector('.list-length');
+const filterMenuBox = document.querySelector('.filter-items');
 const filterMenu = document.querySelector('.filter-items-menu');
+const deleteMenuBox = document.querySelector('.delete-items');
+const deleteMenu = document.querySelector('.delete-items-menu');
 
+//LIST ELEMENTS
 const itemsList = document.querySelector('.list');
 
 class App {
@@ -31,9 +38,13 @@ class App {
 
     //EVENT HANDLERS
     newItemBtn.addEventListener('click', this.newItem.bind(this));
-    itemsList.addEventListener('click', this.deleteItem.bind(this));
+    itemsList.addEventListener('click', this.deleteOneItem.bind(this));
+    deleteMenuBox.addEventListener(
+      'click',
+      this.deleteMultipleItems.bind(this)
+    );
     itemsList.addEventListener('click', this.completeItem.bind(this));
-    filterMenu.addEventListener('change', this.filterItems.bind(this));
+    filterMenuBox.addEventListener('change', this.filterItems.bind(this));
     itemsList.addEventListener('click', this.editItem.bind(this));
   }
 
@@ -48,19 +59,27 @@ class App {
     if (filterMenu.value !== 'completed') this.renderItem(listItem);
     //DISPLAY LIST LENGTH
     this.displayListLength();
+    //DISPLAY LIST CONTROL
+    this.displayListControl();
     newItemText.value = '';
     newItemText.focus;
     //SET LOCAL STORAGE
     this.setLocalStorage();
   }
 
+  displayListControl() {
+    if (this.list.length > 0) listControl.classList.remove('hidden');
+  }
+
   displayListLength() {
     //COUNT NUMBER OF COMPLETED ITEMS
     const numCompl = this.list.filter(item => item.isCompleted).length;
+    //SET THE TEXT
     listLength.textContent = `${numCompl} / ${this.list.length} ${
-      this.list.length > 1 ? 'items' : 'item'
+      this.list.length === 1 ? 'item' : 'items'
     }`;
-    if (this.list.length === 0) listLength.textContent = '';
+    // // SET TEXT TO '' IF LIST EMPTY
+    // if (this.list.length === 0) listLength.textContent = '';
   }
 
   renderItem(listItem) {
@@ -86,19 +105,49 @@ class App {
     });
     //DISPLAY LIST LENGTH
     this.displayListLength();
+    //DISPLAY LIST CONTROL
+    this.displayListControl();
   }
 
-  deleteItem(e) {
-    const btn = e.target.closest('.btn-delete');
-    if (!btn) return;
+  delete(id) {
     //DELETE ITEM OBJECT FROM LIST ARRAY
-    const id = btn.closest('.list-item').dataset.id;
     const index = this.list.findIndex(item => item.id === id);
     this.list.splice(index, 1);
     //RE-RENDER LIST
     this.renderList(this.list);
     //SET LOCAL STORAGE
     this.setLocalStorage();
+    //DISPLAY LIST CONTROL
+    this.displayListControl();
+  }
+
+  deleteOneItem(e) {
+    const btn = e.target.closest('.btn-delete');
+    if (!btn) return;
+    const id = btn.closest('.list-item').dataset.id;
+    this.delete(id);
+  }
+
+  deleteMultipleItems(e) {
+    const btn = e.target.closest('.delete-items-btn');
+    if (!btn) return;
+    //DELETE ALL ITEMS
+    if (deleteMenu.value === 'all') {
+      this.list.splice(0);
+      //RE-RENDER LIST
+      this.renderList(this.list);
+      //SET LOCAL STORAGE
+      this.setLocalStorage();
+    } else if (deleteMenu.value === 'completed') {
+      const newList = this.list.filter(item => !item.isCompleted);
+      this.list = newList;
+      //RE-RENDER LIST
+      this.renderList(this.list);
+      //DISPLAY FILTER OPTION
+      this.filterItems();
+      //SET LOCAL STORAGE
+      this.setLocalStorage();
+    }
   }
 
   editItem(e) {
@@ -138,7 +187,6 @@ class App {
       this.list[index].text = text.textContent;
       //SET LOCAL STORAGE
       this.setLocalStorage();
-      console.log('success');
     }
   }
 
@@ -156,6 +204,8 @@ class App {
     this.setLocalStorage();
     //DISPLAY LIST LENGTH INFO
     this.displayListLength();
+    //FILTER
+    this.filterItems();
   }
 
   setLocalStorage() {
