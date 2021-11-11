@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./script.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="new-item">
+        <form action="">
+          <input
+            class="new-item-text"
+            type="text"
+            placeholder="Don't forget to..."
+            maxlength="50"
+          />
+          <button class="btn new-item-btn">➕</button>
+        </form>
+      </section>
+      <section class="list-control">
+        <p class="list-length"></p>
+        <div class="filter-items">
+          <select name="show-type" id="show-type" class="filter-items-menu">
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="not-completed">Not completed</option>
+          </select>
+        </div>
+      </section>
+      <ul class="list">
+        <!-- <li class="list-item">
+          <div class="list-item-text" contenteditable="false">My first item</div>
+          <button class="btn btn-complete">✅</button>
+          <button class="btn btn-delete">❌</button>
+          <button class="btn btn-edit">📋</button>
+        </li> -->
+      </ul>
+    </main>
+  </body>
+</html>
