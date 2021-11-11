@@ -20,10 +20,14 @@ const itemsList = document.querySelector('.list');
 
 class App {
   list = [];
+  maxLength = 50;
 
   constructor() {
     // GET DATA FROM LOCAL STORAGE
     this.getLocalStorage();
+
+    //SET MAX NUM OF CHARS FOR ITEMS
+    newItemText.maxLength = this.maxLength;
 
     //EVENT HANDLERS
     newItemBtn.addEventListener('click', this.newItem.bind(this));
@@ -110,13 +114,31 @@ class App {
     if (text.contentEditable === 'false') {
       text.contentEditable = 'true';
       text.classList.add('editing');
+      //FOCUS END OF THE TEXT CONTENT
+      const selection = window.getSelection();
+      const range = document.createRange();
+      selection.removeAllRanges();
+      range.selectNodeContents(text);
+      range.collapse(false);
+      selection.addRange(range);
       text.focus();
+      //PREVENT FROM TYPING MORE THEN "THIS.MAXLENGTH" CHARS
+      text.addEventListener('keydown', e => {
+        const textLen = text.textContent.length;
+        if (textLen >= this.maxLength && e.key !== 'Backspace')
+          e.preventDefault();
+      });
     }
     //CLOSE CONTENT EDITING IF THE FIELD ISN'T EMPTY
     else {
       if (text.textContent === '') return;
       text.contentEditable = 'false';
       text.classList.remove('editing');
+      //SAVE NEW ITEM TEXT
+      this.list[index].text = text.textContent;
+      //SET LOCAL STORAGE
+      this.setLocalStorage();
+      console.log('success');
     }
   }
 
