@@ -69,15 +69,14 @@ class App {
 
   displayListControl() {
     if (this.list.length > 0) listControl.classList.remove('hidden');
+    else listControl.classList.add('hidden');
   }
 
   displayListLength() {
     //COUNT NUMBER OF COMPLETED ITEMS
     const numCompl = this.list.filter(item => item.isCompleted).length;
     //SET THE TEXT
-    listLength.textContent = `${numCompl} / ${this.list.length} ${
-      this.list.length === 1 ? 'item' : 'items'
-    }`;
+    listLength.textContent = `✔ ${numCompl}/${this.list.length}`;
     // // SET TEXT TO '' IF LIST EMPTY
     // if (this.list.length === 0) listLength.textContent = '';
   }
@@ -87,12 +86,12 @@ class App {
       <li class="list-item ${
         listItem.isCompleted ? 'completed' : ''
       }" data-id="${listItem.id}">
+        <button class="btn btn-complete">✔</button>
         <div class="list-item-text" contenteditable="false">${
           listItem.text
         }</div>
-        <button class="btn btn-complete">✅</button>
-        <button class="btn btn-delete">❌</button>
         <button class="btn btn-edit">📋</button>
+        <button class="btn btn-delete">✖</button>
       </li>
     `;
     itemsList.insertAdjacentHTML('beforeend', markup);
