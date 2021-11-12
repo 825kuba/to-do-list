@@ -2,10 +2,9 @@
   --background: #261c2c;
   --font-primary: whitesmoke;
   --form-bg: #3e2c41;
-  --form-editing: #261c2c;
   --btn-new: #5c527f;
   --btn-complete: #6e85b2;
-  --btn-delete: #b26eb2;
+  --btn-delete: #b32b5a;
 }
 
 * {
@@ -173,7 +172,7 @@ select {
   transition: 0.2s ease;
 }
 .list-item-text.editing {
-  background-color: var(--form-editing);
+  background-color: var(--background);
   outline: none;
 }
 

@@ -170,8 +170,10 @@ class App {
       range.collapse(false);
       selection.addRange(range);
       text.focus();
-      //PREVENT FROM TYPING MORE THEN "THIS.MAXLENGTH" CHARS
       text.addEventListener('keydown', e => {
+        // DONT ALLOW NEW LINES
+        if (e.key === 'Enter') e.preventDefault();
+        //PREVENT FROM TYPING MORE THEN "THIS.MAXLENGTH" CHARS
         const textLen = text.textContent.length;
         if (textLen >= this.maxLength && e.key !== 'Backspace')
           e.preventDefault();
