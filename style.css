@@ -1,12 +1,11 @@
 :root {
-  --background: rgb(112, 71, 46);
-  --font-primary: white;
-  --font-secondary: black;
-  --form-bg: whitesmoke;
-  --form-editing: rgb(216, 169, 184);
-  --btn-primary: rgb(103, 103, 155);
-  --btn-secondary: rgb(81, 141, 79);
-  --btn-tertiary: rgb(170, 76, 76);
+  --background: #261c2c;
+  --font-primary: whitesmoke;
+  --form-bg: #3e2c41;
+  --form-editing: #261c2c;
+  --btn-new: #5c527f;
+  --btn-complete: #6e85b2;
+  --btn-delete: #b26eb2;
 }
 
 * {
@@ -23,17 +22,15 @@ html {
 body {
   max-width: 100vw;
   height: 100vh;
-  background-image: url(./img/bg-wood.jpg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
 }
 
 main {
   margin: 0 auto;
   padding-top: 50px;
-  width: 320px;
+  width: 80vw;
+  max-width: 500px;
   display: grid;
+  color: var(--font-primary);
 }
 
 /* ////////////////////////
@@ -50,6 +47,13 @@ label {
   cursor: pointer;
   border: none;
   font-size: 1.2rem;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  transition: 0.1s;
+}
+.btn:hover {
+  opacity: 1;
 }
 
 /* ////////////////////////
@@ -58,6 +62,7 @@ label {
 
 .new-item-form {
   width: 100%;
+  height: 2rem;
   border-radius: 5px;
   overflow: hidden;
   background-color: var(--form-bg);
@@ -69,13 +74,14 @@ label {
 .new-item-text {
   outline: none;
   background-color: var(--form-bg);
+  color: var(--font-primary);
   border: none;
   font-size: 1.2rem;
   padding: 0 0.5rem 0 0.5rem;
 }
 
 .new-item-btn {
-  background-color: var(--btn-primary);
+  background-color: var(--btn-new);
   color: var(--form-bg);
 }
 
@@ -100,7 +106,6 @@ label {
   grid-column: 1 / span 2;
   grid-row: 2;
   margin-left: 0.5rem;
-  /* border: 1px solid red; */
   justify-self: flex-start;
 }
 
@@ -108,6 +113,8 @@ select {
   outline: none;
   cursor: pointer;
   font-size: 1.1rem;
+  background-color: var(--form-bg);
+  color: var(--font-primary);
 }
 
 .filter-items {
@@ -130,7 +137,7 @@ select {
 
 .list {
   display: grid;
-  gap: 5px;
+  gap: 0.5rem;
   width: 100%;
 }
 
@@ -138,13 +145,23 @@ select {
   word-break: break-all;
   display: grid;
   grid-template-columns: 1fr 7fr 1fr 1fr;
-  min-height: 1.8rem;
+  min-height: 2rem;
   border-radius: 5px;
   overflow: hidden;
+  background-color: var(--form-bg);
+}
+
+.list-item .btn-complete {
+  background-color: var(--btn-complete);
+}
+.list-item .btn-delete {
+  background-color: var(--btn-delete);
+}
+.list-item .btn-edit {
+  background-color: var(--btn-new);
 }
 
 .list-item-text {
-  background-color: var(--form-bg);
   font-size: 1.2rem;
   padding: 0 0.5rem 0 0.5rem;
   transition: 0.2s ease;
@@ -160,6 +177,9 @@ select {
 .completed .list-item-text {
   text-decoration: line-through;
 }
+.completed .btn-complete {
+  background-color: var(--form-bg);
+}
 .completed .btn-edit {
   cursor: initial;
 }
@@ -169,24 +189,20 @@ select {
 //////////////////////// */
 
 /* colors */
-.list-item .btn-complete {
-  background-color: var(--btn-secondary);
-}
+
+/* exception for opacity */
+/* .completed .btn-edit:hover {
+  opacity: 0.8;
+} */
+
+.list-item .btn-edit,
 .list-item .btn-delete {
-  background-color: var(--btn-tertiary);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.1s;
 }
-.list-item .btn-edit {
-  background-color: var(--btn-primary);
-}
-/* hover opacity */
-.list-item .btn {
-  opacity: 0.8;
-  transition: 0.2s ease;
-}
-.list-item .btn:hover {
+.list-item:hover .btn-edit,
+.list-item:hover .btn-delete {
   opacity: 1;
-}
-/* exception for .btn-edit */
-.completed .btn-edit:hover {
-  opacity: 0.8;
+  visibility: visible;
 }
