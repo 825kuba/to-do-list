@@ -19,8 +19,7 @@ const listControl = document.querySelector('.list-control');
 const listLength = document.querySelector('.list-length');
 const filterMenuBox = document.querySelector('.filter-items');
 const filterMenu = document.querySelector('.filter-items-menu');
-const deleteMenuBox = document.querySelector('.delete-items');
-const deleteMenu = document.querySelector('.delete-items-menu');
+const deleteItemsBtn = document.querySelector('.delete-items');
 
 //LIST ELEMENTS
 const itemsList = document.querySelector('.list');
@@ -39,7 +38,7 @@ class App {
     //EVENT HANDLERS
     newItemBtn.addEventListener('click', this.newItem.bind(this));
     itemsList.addEventListener('click', this.deleteOneItem.bind(this));
-    deleteMenuBox.addEventListener(
+    deleteItemsBtn.addEventListener(
       'click',
       this.deleteMultipleItems.bind(this)
     );
@@ -128,16 +127,17 @@ class App {
   }
 
   deleteMultipleItems(e) {
-    const btn = e.target.closest('.delete-items-btn');
+    const btn = e.target.closest('.delete-items');
     if (!btn) return;
     //DELETE ALL ITEMS
-    if (deleteMenu.value === 'all') {
+    if (filterMenu.value === 'all') {
       this.list.splice(0);
       //RE-RENDER LIST
       this.renderList(this.list);
       //SET LOCAL STORAGE
       this.setLocalStorage();
-    } else if (deleteMenu.value === 'completed') {
+      //DELETE COMPLETED ITEMS
+    } else if (filterMenu.value === 'completed') {
       const newList = this.list.filter(item => !item.isCompleted);
       this.list = newList;
       //RE-RENDER LIST
@@ -146,7 +146,7 @@ class App {
       this.filterItems();
       //SET LOCAL STORAGE
       this.setLocalStorage();
-    }
+    } else return;
   }
 
   editItem(e) {
@@ -229,15 +229,23 @@ class App {
   filterItems() {
     let filterList;
     // IF "ALL" SELECTED, JUST RENDER THIS.LIST
-    if (filterMenu.value === 'all') this.renderList(this.list);
+    if (filterMenu.value === 'all') {
+      this.renderList(this.list);
+      //STYLE ON DELETE ITEMS BTN
+      deleteItemsBtn.classList.remove('inactive');
+    }
     // IF OTHER OPTIONS SELECTED, RENDER FILTERED LIST
     if (filterMenu.value === 'completed') {
       filterList = this.list.filter(item => item.isCompleted);
       this.renderList(filterList);
+      //STYLE ON DELETE ITEMS BTN
+      deleteItemsBtn.classList.remove('inactive');
     }
     if (filterMenu.value === 'not-completed') {
       filterList = this.list.filter(item => !item.isCompleted);
       this.renderList(filterList);
+      //STYLE ON DELETE ITEMS BTN
+      deleteItemsBtn.classList.add('inactive');
     }
   }
 }

@@ -91,22 +91,14 @@ label {
 
 .list-control {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: 2fr 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(10, 1fr);
+  align-content: center;
   width: 100%;
-  padding: 1rem 0 0.2rem 0;
-  margin: 1rem 0 0 0;
+  height: 2rem;
+  margin: 1rem 0;
 }
 .list-control.hidden > * {
   display: none;
-}
-
-.list-length {
-  grid-column: 1 / span 2;
-  grid-row: 2;
-  margin-left: 0.5rem;
-  justify-self: flex-start;
 }
 
 select {
@@ -115,20 +107,34 @@ select {
   font-size: 1.1rem;
   background-color: var(--form-bg);
   color: var(--font-primary);
+  border-radius: 5px;
+}
+
+.list-length {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  justify-self: center;
+  /* align-self: center; */
 }
 
 .filter-items {
-  grid-column: 1 / span 7;
+  grid-column: 3 / 10;
   grid-row: 1;
-  /* border: 1px solid red; */
-  justify-self: center;
+  justify-self: flex-end;
+  /* align-self: center; */
+  padding-right: 1rem;
 }
 
 .delete-items {
-  grid-column: 5 / span 3;
-  grid-row: 2;
-  /* border: 1px solid red; */
-  justify-self: flex-end;
+  grid-column: 10;
+  grid-row: 1;
+  justify-self: center;
+  background-color: var(--btn-delete);
+  border-radius: 5px;
+}
+.delete-items.inactive {
+  opacity: 0.2;
+  cursor: initial;
 }
 
 /* ////////////////////////
@@ -183,17 +189,6 @@ select {
 .completed .btn-edit {
   cursor: initial;
 }
-
-/* ////////////////////////
-    LIST ITEM BTNS
-//////////////////////// */
-
-/* colors */
-
-/* exception for opacity */
-/* .completed .btn-edit:hover {
-  opacity: 0.8;
-} */
 
 .list-item .btn-edit,
 .list-item .btn-delete {
