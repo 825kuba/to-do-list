@@ -32,6 +32,9 @@ class App {
     // GET DATA FROM LOCAL STORAGE
     this.getLocalStorage();
 
+    // INITIAL FILTER (some browsers save settings of select menu)
+    this.filterItems();
+
     //SET MAX NUM OF CHARS FOR ITEMS
     newItemText.maxLength = this.maxLength;
 
