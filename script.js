@@ -79,8 +79,6 @@ class App {
     const numCompl = this.list.filter(item => item.isCompleted).length;
     //SET THE TEXT
     listLength.textContent = `✔ ${numCompl}/${this.list.length}`;
-    // // SET TEXT TO '' IF LIST EMPTY
-    // if (this.list.length === 0) listLength.textContent = '';
   }
 
   renderItem(listItem) {
@@ -150,6 +148,29 @@ class App {
       //SET LOCAL STORAGE
       this.setLocalStorage();
     } else return;
+  }
+
+  filterItems() {
+    let filterList;
+    // IF "ALL" SELECTED, JUST RENDER THIS.LIST
+    if (filterMenu.value === 'all') {
+      this.renderList(this.list);
+      //STYLE ON DELETE ITEMS BTN
+      deleteItemsBtn.classList.remove('inactive');
+    }
+    // IF OTHER OPTIONS SELECTED, RENDER FILTERED LIST
+    if (filterMenu.value === 'completed') {
+      filterList = this.list.filter(item => item.isCompleted);
+      this.renderList(filterList);
+      //STYLE ON DELETE ITEMS BTN
+      deleteItemsBtn.classList.remove('inactive');
+    }
+    if (filterMenu.value === 'not-completed') {
+      filterList = this.list.filter(item => !item.isCompleted);
+      this.renderList(filterList);
+      //STYLE ON DELETE ITEMS BTN
+      deleteItemsBtn.classList.add('inactive');
+    }
   }
 
   editItem(e) {
@@ -229,29 +250,6 @@ class App {
     });
     //RENDER LIST
     this.renderList(this.list);
-  }
-
-  filterItems() {
-    let filterList;
-    // IF "ALL" SELECTED, JUST RENDER THIS.LIST
-    if (filterMenu.value === 'all') {
-      this.renderList(this.list);
-      //STYLE ON DELETE ITEMS BTN
-      deleteItemsBtn.classList.remove('inactive');
-    }
-    // IF OTHER OPTIONS SELECTED, RENDER FILTERED LIST
-    if (filterMenu.value === 'completed') {
-      filterList = this.list.filter(item => item.isCompleted);
-      this.renderList(filterList);
-      //STYLE ON DELETE ITEMS BTN
-      deleteItemsBtn.classList.remove('inactive');
-    }
-    if (filterMenu.value === 'not-completed') {
-      filterList = this.list.filter(item => !item.isCompleted);
-      this.renderList(filterList);
-      //STYLE ON DELETE ITEMS BTN
-      deleteItemsBtn.classList.add('inactive');
-    }
   }
 }
 

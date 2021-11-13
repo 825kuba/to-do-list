@@ -1,5 +1,8 @@
-#To do list
+# To do list
 
-Built using vanilla Java Script.
+Built using vanilla JS.
+Makes use of the local storage.
 
-Try it here:
+The drop-down menu filters the view and also tells the delete button which items to delete.
+
+Try it here: https://jakub-to-do.netlify.app/
