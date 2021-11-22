@@ -39,7 +39,7 @@ main {
   margin: 0 auto;
   padding-top: 50px;
   width: 95vw;
-  min-width: 300px;
+  min-width: 320px;
   max-width: 500px;
   display: grid;
   gap: 2rem;
